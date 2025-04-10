@@ -17,7 +17,8 @@
 				<a class="nav-link" aria-current="page" href="/">Home</a>
 				<a class="nav-link" href="/events">Event Log</a>
 				<a class="nav-link" href="/about">About</a>
-				<a class="nav-link" href="/contact">Contact</a>
+				<a class="nav-link" href="/Shopping Centre">Shopping Centre</a>
+				<a class="nav-link" href="/contact us">Contact Us</a>
 			</div>
 		</div>
 	</div>

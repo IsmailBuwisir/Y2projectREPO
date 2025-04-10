@@ -23,18 +23,18 @@
 	
 	
 	  // Request Supabase to select * from trolley_events where trolley_id = filter_id
-	  async function filterByTrolley(filter_id = '') {
+	  async function filterByTrolley(filter_id = 0) {
 	
 		// a variable for supabase result
 		let filtered_events = [];
 	
 		// if filter_id is set, fetch matching events
 		// SELECT * FROM trolley_events WHERE trolley_id = filter_id
-		if (filter_id) {
+		if (filter_id > 0) {
 			filtered_events = await db.get_events_by_trolley_id(filter_id);
 	
 		} else {
-		  // if filter_id is empty, get all events
+		  // if filter_id is 0, get all events
 		  filtered_events = await db.get_all_trolley_events();
 		}
 		console.log(filtered_events);

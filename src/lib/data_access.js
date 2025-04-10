@@ -27,10 +27,10 @@ import { supabase } from './supabase.js';
 
 // Get all trolleys via Supabase API
 export async function get_all_trolleys() {
-	const result = await supabase
-		.from('trolley')
-		.select('*')
-		.order('id', { ascending: true });
+    const result = await supabase
+        .from('trolley')
+        .select('*')
+        .order('id', { ascending: true });
 
     // log errors
     if (result.error) {
@@ -43,11 +43,11 @@ export async function get_all_trolleys() {
 
 // Get all trolley events via Supabase API
 export async function get_all_trolley_events(order_col = 'timestamp', order_dir = true) {
-	const result = await supabase
-		.from('trolley_events')
+    const result = await supabase
+        .from('trolley_events')
         // select trolley_id from trolley table - requires valid one-many setup  
-		.select('*, trolley(trolley_id)')
-		.order(order_col, { ascending: order_dir });
+        .select('*, trolley(trolley_id)')
+        .order(order_col, { ascending: order_dir });
 
     // log errors
     if (result.error) {
@@ -61,11 +61,11 @@ export async function get_all_trolley_events(order_col = 'timestamp', order_dir 
 // Get all events by trolley_id via Supabase API
 export async function get_events_by_trolley_id(trolley_id) {
     const result = await supabase
-		.from('trolley_events')
+        .from('trolley_events')
         // select trolley_id from trolley table - requires valid one-many setup  
-		.select('*, trolley(trolley_id)')
+        .select('*, trolley(trolley_id)')
         .eq('trolley_id', trolley_id)
-		.order('timestamp', { ascending: true });
+        .order('timestamp', { ascending: true });
 
     // log errors
     if (result.error) {
@@ -77,11 +77,11 @@ export async function get_events_by_trolley_id(trolley_id) {
 }
 
 // Delete trolley event - no data returned by Supabase
-export async function delete_event_by_id(event_id) {
+export async function delete_trolley_event_by_id(event_id) {
     const result = await supabase
-		.from('trolley_events')
+        .from('trolley_events')
         // delete the trolley event by ID
-		.delete()
+        .delete()
         .eq('id', event_id);
 
     // log errors
@@ -98,11 +98,11 @@ export async function delete_event_by_id(event_id) {
 // uses .or and ilike to search multiple columns
 export async function search_events(search_text) {
     const result = await supabase
-		.from('trolley_events')
+        .from('trolley_events')
         // select trolley_id from trolley table - requires valid one-many setup  
-		.select('*, trolley(trolley_id)')
+        .select('*, trolley(trolley_id)')
         .or(`status.ilike.%${search_text}%,location.ilike.%${search_text}%`)
-		.order('timestamp', { ascending: true });
+        .order('timestamp', { ascending: true });
 
     // log errors
     if (result.error) {
@@ -113,12 +113,14 @@ export async function search_events(search_text) {
     return result.data;
 }
 
+
+
 // Get details for a single trolley event by ID
 export async function get_event_by_id(id) {
     const result = await supabase
-		.from('trolley_events')
+        .from('trolley_events')
         // select trolley_id from trolley table - requires valid one-many setup  
-		.select('*, trolley(*)')
+        .select('*, trolley(*)')
         .eq('id', id);
 
     // log errors
@@ -128,4 +130,36 @@ export async function get_event_by_id(id) {
 
     // return data
     return result.data;
+}
+
+
+// Shopping centre Page
+
+// Get all shopping centres
+export async function get_all_shopping_centres() {
+	const result = await supabase
+		.from('shopping_centre')
+		.select('*')
+		.order('id', { ascending: true });
+
+	if (result.error) {
+		console.log(`get all shopping centres error: ${result.error.message}`);
+	}
+
+	return result.data;
+}
+
+// Get a shopping centre by its ID
+export async function get_shopping_centre_by_id(id) {
+	const result = await supabase
+		.from('shopping_centre')
+		.select('*')
+		.eq('id', id)
+		.order('id', { ascending: true });
+
+	if (result.error) {
+		console.log(`get shopping centre by id error: ${result.error.message}`);
+	}
+
+	return result.data;
 }
